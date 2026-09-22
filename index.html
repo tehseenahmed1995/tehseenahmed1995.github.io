@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tehseen Ahmed, Backend Engineer, PHP / Laravel</title>
+<meta name="description" content="Tehseen Ahmed, Senior Backend Engineer specialising in PHP/Laravel, RESTful APIs and AI-assisted development. Based in Riyadh, Saudi Arabia.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230F1320'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='28' fill='%23E3A857' text-anchor='middle'%3ETA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1320;
+    --surface:#161A29;
+    --surface-2:#1B2035;
+    --line:#2A3050;
+    --text:#E7E9F2;
+    --text-muted:#9AA1BF;
+    --accent:#E3A857;
+    --accent-2:#4FD1C5;
+    --font-display:'Space Grotesk', 'Inter', sans-serif;
+    --font-body:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:'JetBrains Mono', 'Courier New', monospace;
+    color-scheme: dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top: 84px; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  img{ max-width:100%; }
+
+  ::selection{ background:var(--accent); color:#0F1320; }
+
+  :focus-visible{
+    outline:2px solid var(--accent-2);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,19,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:920px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+  }
+  .logo{
+    font-family:var(--font-mono);
+    font-size:15px;
+    color:var(--accent);
+    letter-spacing:0.02em;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .logo span{ color:var(--text-muted); }
+  nav.links{ display:flex; gap:24px; align-items:center; }
+  nav.links a{
+    text-decoration:none;
+    color:var(--text-muted);
+    font-size:14.5px;
+    transition:color .15s ease;
+  }
+  nav.links a:hover{ color:var(--text); }
+  .nav-cta{
+    background:var(--accent);
+    color:#181206 !important;
+    padding:8px 16px;
+    border-radius:6px;
+    font-weight:600;
+    font-size:14px;
+    transition:filter .15s ease;
+  }
+  .nav-cta:hover{ filter:brightness(1.08); }
+
+  @media (max-width:640px){
+    nav.links .nav-link-text{ display:none; }
+    nav.links{ gap:14px; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 76px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:56px 56px;
+    opacity:0.25;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+  .hero-inner{ position:relative; }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    color:var(--accent-2);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:22px;
+    opacity:0;
+    animation:fadeUp .6s ease forwards;
+  }
+  .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent-2);
+    box-shadow:0 0 0 3px rgba(79,209,197,0.18);
+  }
+  h1.name{
+    font-family:var(--font-display);
+    font-size:clamp(40px, 7vw, 64px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    margin:0 0 14px;
+    opacity:0;
+    animation:fadeUp .6s ease .08s forwards;
+  }
+  p.tagline{
+    font-size:clamp(17px, 2.4vw, 20px);
+    color:var(--text-muted);
+    max-width:620px;
+    margin:0 0 34px;
+    opacity:0;
+    animation:fadeUp .6s ease .16s forwards;
+  }
+  p.tagline strong{ color:var(--text); font-weight:600; }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow, h1.name, p.tagline{ animation:none; opacity:1; }
+  }
+
+  .cta-row{
+    display:flex; flex-wrap:wrap; gap:12px;
+    opacity:0;
+    animation:fadeUp .6s ease .24s forwards;
+  }
+  @media (prefers-reduced-motion: reduce){ .cta-row{ animation:none; opacity:1; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:11px 18px;
+    border-radius:6px;
+    font-size:14.5px;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .12s ease, filter .15s ease, border-color .15s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-primary{ background:var(--accent); color:#181206; }
+  .btn-primary:hover{ filter:brightness(1.08); }
+  .btn-outline{
+    background:transparent; color:var(--text);
+    border-color:var(--line);
+  }
+  .btn-outline:hover{ border-color:var(--accent-2); color:var(--accent-2); }
+  .btn svg{ width:16px; height:16px; flex-shrink:0; }
+
+  .location-line{
+    margin-top:26px;
+    font-size:13.5px;
+    color:var(--text-muted);
+    display:flex; align-items:center; gap:8px;
+    flex-wrap:wrap;
+  }
+  .location-line svg{ width:15px; height:15px; color:var(--accent); flex-shrink:0; }
+
+  /* ---------- Sections ---------- */
+  section{ padding:64px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:30px;
+  }
+  .section-num{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--accent);
+  }
+  h2.section-title{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .about-text p{
+    color:var(--text-muted);
+    max-width:70ch;
+    margin:0 0 16px;
+  }
+  .about-text p:last-child{ margin-bottom:0; }
+  .about-text strong{ color:var(--text); font-weight:600; }
+
+  .stat-row{
+    display:flex; gap:28px; flex-wrap:wrap;
+    margin-top:28px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .stat{ min-width:120px; }
+  .stat .num{
+    font-family:var(--font-display);
+    font-size:28px; font-weight:700;
+    color:var(--accent);
+    display:block;
+  }
+  .stat .label{
+    font-size:13px; color:var(--text-muted);
+  }
+
+  /* ---------- Experience ---------- */
+  .timeline{ position:relative; }
+  .job{
+    position:relative;
+    padding:0 0 36px 26px;
+    border-left:2px solid var(--line);
+  }
+  .job:last-child{ padding-bottom:0; }
+  .job::before{
+    content:"";
+    position:absolute; left:-6px; top:4px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent-2);
+  }
+  .job-head{
+    display:flex; flex-wrap:wrap; align-items:baseline;
+    justify-content:space-between; gap:8px 16px;
+    margin-bottom:4px;
+  }
+  .job-title{
+    font-family:var(--font-display);
+    font-size:18.5px; font-weight:600; color:var(--text);
+  }
+  .job-dates{
+    font-family:var(--font-mono);
+    font-size:12.5px; color:var(--text-muted);
+    white-space:nowrap;
+  }
+  .job-company{
+    color:var(--accent-2);
+    font-size:14.5px;
+    font-weight:500;
+    margin-bottom:2px;
+  }
+  .job-context{
+    color:var(--text-muted);
+    font-size:14px;
+    font-style:italic;
+    margin-bottom:12px;
+  }
+  .job ul{
+    margin:0; padding-left:18px;
+    color:var(--text-muted);
+    font-size:14.5px;
+  }
+  .job li{ margin-bottom:6px; }
+  .job li:last-child{ margin-bottom:0; }
+  .job li strong{ color:var(--text); font-weight:600; }
+
+  /* ---------- AI section ---------- */
+  .ai-section{
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .ai-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:start;
+  }
+  @media (max-width:760px){
+    .ai-grid{ grid-template-columns:1fr; }
+  }
+  .ai-copy p{
+    color:var(--text-muted);
+    margin:0 0 16px;
+    max-width:60ch;
+  }
+  .ai-copy p:last-child{ margin-bottom:0; }
+  .ai-copy strong{ color:var(--text); }
+
+  .tool-panel{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px;
+  }
+  .tool-panel-head{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-bottom:14px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .tool-list{ display:flex; flex-direction:column; gap:10px; }
+  .tool-row{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:14px;
+  }
+  .tool-name{ color:var(--text); font-weight:500; }
+  .tool-use{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--accent-2);
+  }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .skill-block{
+    background:var(--bg);
+    padding:22px;
+  }
+  .skill-block h3{
+    font-family:var(--font-mono);
+    font-size:13px;
+    font-weight:500;
+    color:var(--accent);
+    margin:0 0 14px;
+  }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-size:13px;
+    color:var(--text-muted);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:5px 10px;
+  }
+
+  .learning-note{
+    margin-top:24px;
+    padding:22px;
+    border:1px solid var(--line);
+    border-left:2px solid var(--accent-2);
+    border-radius:0 8px 8px 0;
+    background:var(--surface);
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .learning-note-icon{
+    width:36px; height:36px; border-radius:7px;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .learning-note-icon svg{ width:18px; height:18px; color:var(--accent-2); }
+  .learning-note-title{
+    font-family:var(--font-display);
+    font-size:15.5px; font-weight:600; color:var(--text);
+    margin-bottom:6px;
+  }
+  .learning-note-text{
+    font-size:14px; color:var(--text-muted);
+    margin:0; max-width:62ch;
+  }
+
+  /* ---------- Contact / Footer ---------- */
+  .contact-inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:640px){
+    .contact-inner{ grid-template-columns:1fr; }
+  }
+  .contact-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px;
+    display:flex; align-items:flex-start; gap:14px;
+    text-decoration:none;
+    transition:border-color .15s ease;
+  }
+  .contact-card:hover{ border-color:var(--accent-2); }
+  .contact-icon{
+    width:38px; height:38px; border-radius:7px;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .contact-icon svg{ width:18px; height:18px; color:var(--accent-2); }
+  .contact-label{ font-size:12.5px; color:var(--text-muted); margin-bottom:3px; }
+  .contact-value{ font-size:15px; color:var(--text); font-weight:500; }
+
+  .cv-banner{
+    margin-top:28px;
+    padding:26px;
+    border:1px dashed var(--line);
+    border-radius:8px;
+    display:flex; flex-wrap:wrap; align-items:center;
+    justify-content:space-between; gap:16px;
+  }
+  .cv-banner-text{ font-size:14.5px; color:var(--text-muted); }
+  .cv-banner-text strong{ color:var(--text); }
+
+  footer{
+    padding:32px 0 48px;
+    text-align:center;
+  }
+  footer p{
+    font-size:13px; color:var(--text-muted);
+    font-family:var(--font-mono);
+    margin:0;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">tehseen<span>.dev</span></a>
+    <nav class="links">
+      <a href="#about"><span class="nav-link-text">About</span></a>
+      <a href="#experience"><span class="nav-link-text">Experience</span></a>
+      <a href="#ai"><span class="nav-link-text">AI&nbsp;Workflow</span></a>
+      <a href="#skills"><span class="nav-link-text">Skills</span></a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="eyebrow"><span class="dot"></span>available for new roles · riyadh, saudi arabia</div>
+      <h1 class="name">Tehseen Ahmed</h1>
+      <p class="tagline">
+        I design and ship the <strong>Laravel backends and APIs</strong> other teams build on, and for the last two
+        years I've paired that with <strong>AI-assisted development</strong> to move faster without cutting corners.
+      </p>
+      <div class="cta-row">
+        <a href="#" id="cv-download-link" class="btn btn-primary" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+          Download CV
+        </a>
+        <a href="https://wa.me/966554870506" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2zm5.79 14.24c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.11.32.02.51-.09.19-.14.31-.27.48-.14.16-.29.36-.41.48-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.61-.17 1.29z"/></svg>
+          WhatsApp (Saudi Arabia)
+        </a>
+        <a href="https://wa.me/923312251252" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2zm5.79 14.24c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.11.32.02.51-.09.19-.14.31-.27.48-.14.16-.29.36-.41.48-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.61-.17 1.29z"/></svg>
+          WhatsApp (Pakistan)
+        </a>
+      </div>
+      <div class="location-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Based in Riyadh, open to relocating within any city in Saudi Arabia
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a backend engineer who has spent the past 7+ years inside PHP and Laravel, architecting
+            <strong>RESTful APIs</strong>, designing <strong>relational database schemas</strong>, and keeping
+            production systems fast, secure and easy to maintain as they grow. Most of that time has gone into
+            products where correctness actually matters: a VAT compliance platform, a logistics management system,
+            and a point-of-sale system running in a live retail store.
+          </p>
+          <p>
+            I care about the parts of backend work that don't show up in a demo: clean data models, sensible
+            API contracts, code that the next engineer can actually read, and systems that stay reliable once
+            real traffic hits them. I also lead code reviews and mentor other engineers, because a codebase's
+            quality is a team habit, not an individual one.
+          </p>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span class="num">7+</span><span class="label">years in PHP / Laravel</span></div>
+        <div class="stat"><span class="num">3</span><span class="label">production systems owned end-to-end</span></div>
+        <div class="stat"><span class="num">3</span><span class="label">databases: MySQL, MSSQL, PostgreSQL</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Principal Software Engineer</span>
+            <span class="job-dates">Feb 2022 to Present</span>
+          </div>
+          <div class="job-company">tkxel</div>
+          <div class="job-context">Comply, a VAT compliance platform (by Fintua) for preparing, validating and submitting VAT returns</div>
+          <ul>
+            <li>Architect and build <strong>secure RESTful APIs</strong> and server-side services in Laravel, applying SOLID principles as regulations evolve</li>
+            <li>Own full-stack features end-to-end and <strong>lead code reviews</strong>, setting coding standards for the wider team</li>
+            <li>Use <strong>AI-assisted tooling</strong> (Claude Code, Cursor, Kiro) daily to speed up implementation, debugging and documentation</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Team Lead Software Engineer</span>
+            <span class="job-dates">Feb 2020 to Feb 2022</span>
+          </div>
+          <div class="job-company">Pixako Technologies</div>
+          <div class="job-context">Allotrac, a cloud-based logistics management system with end-to-end supply chain visibility</div>
+          <ul>
+            <li>Led design and delivery of full-stack product requirements, including <strong>modular, reusable system components</strong></li>
+            <li>Guided a development team's day-to-day work and reviewed code from junior developers</li>
+            <li>Partnered with business analysts and architects across the full development lifecycle</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">PHP Developer</span>
+            <span class="job-dates">Feb 2018 to Jan 2020</span>
+          </div>
+          <div class="job-company">E-Solution</div>
+          <div class="job-context">E-POS, a web-based Point of Sale system for a live retail store</div>
+          <ul>
+            <li>Delivered new features and fixes for a production POS system, including a full UI revamp</li>
+            <li>Ran requirement analysis and estimation directly with the client</li>
+            <li>Owned on-time, on-demand deployments across the release cycle</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AI WORKFLOW -->
+  <section id="ai" class="ai-section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Building with AI, not just talking about it</h2>
+      </div>
+      <div class="ai-grid">
+        <div class="ai-copy">
+          <p>
+            I got genuinely excited about AI-assisted development early, and it's now part of how I actually
+            work, not a line I add to sound current. I use it to move through spec-to-code faster, to catch
+            things in a refactor I might otherwise miss, and to keep documentation from falling behind the code.
+          </p>
+          <p>
+            The judgment still has to be mine: reviewing architecture, deciding what's worth building, and
+            owning what ships to production. But letting AI handle the repetitive parts of the day means more
+            of my time goes to the decisions that actually need a senior engineer.
+          </p>
+          <p>
+            I'm also a quick learner, and I'm relocating to Saudi Arabia with an open mind about the stack I
+            work in. If a team needs Node.js, Python, Go, or a cloud platform I haven't used before, I'll pick
+            it up fast, and with AI tools in the loop I can get productive in a new stack well faster than I
+            could on my own.
+          </p>
+        </div>
+        <div class="tool-panel">
+          <div class="tool-panel-head">daily tools</div>
+          <div class="tool-list">
+            <div class="tool-row"><span class="tool-name">Claude Code</span><span class="tool-use">spec → code</span></div>
+            <div class="tool-row"><span class="tool-name">Cursor</span><span class="tool-use">refactoring</span></div>
+            <div class="tool-row"><span class="tool-name">Kiro</span><span class="tool-use">architecture</span></div>
+            <div class="tool-row"><span class="tool-name">ChatGPT</span><span class="tool-use">docs & debugging</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Skills</h2>
+      </div>
+    </div>
+    <div class="wrap" style="padding:0 28px;">
+      <div class="skills-grid">
+        <div class="skill-block">
+          <h3>backend & apis</h3>
+          <div class="tag-row">
+            <span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">Eloquent ORM</span>
+            <span class="tag">RESTful APIs</span><span class="tag">Microservices</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h3>data</h3>
+          <div class="tag-row">
+            <span class="tag">MySQL</span><span class="tag">MSSQL</span><span class="tag">PostgreSQL</span>
+            <span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">Sockets</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h3>front end</h3>
+          <div class="tag-row">
+            <span class="tag">JavaScript</span><span class="tag">jQuery</span><span class="tag">React.js</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h3>engineering practice</h3>
+          <div class="tag-row">
+            <span class="tag">SOLID</span><span class="tag">OOP</span><span class="tag">Design Patterns</span>
+            <span class="tag">Unit Testing</span><span class="tag">Code Review</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h3>cloud & infra</h3>
+          <div class="tag-row">
+            <span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Nginx</span>
+          </div>
+        </div>
+        <div class="skill-block">
+          <h3>ai-assisted dev</h3>
+          <div class="tag-row">
+            <span class="tag">Claude Code</span><span class="tag">Cursor</span><span class="tag">Kiro</span><span class="tag">ChatGPT</span>
+          </div>
+        </div>
+      </div>
+      <div class="learning-note">
+        <div class="learning-note-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20l9-5-9-5-9 5 9 5z"/><path d="M12 12L3 7l9-5 9 5-9 5z"/><path d="M5 13.18v4.34a7 7 0 0014 0v-4.34"/></svg>
+        </div>
+        <div>
+          <div class="learning-note-title">Open to any tech stack</div>
+          <p class="learning-note-text">
+            This list is what I've shipped with so far, not a ceiling. I'm relocating to Saudi Arabia and I'm
+            genuinely open to learning whatever stack a team is running, Node.js, Python, Go, or something else
+            entirely. I pick things up fast, and pairing that with AI tools means I can get productive in a new
+            language or framework well faster than the usual ramp-up.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Get in touch</h2>
+      </div>
+
+      <div class="contact-inner">
+        <a href="https://wa.me/966554870506" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">WhatsApp (Saudi Arabia)</div>
+            <div class="contact-value">+966 55 487 0506</div>
+          </div>
+        </a>
+
+        <a href="https://wa.me/923312251252" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">WhatsApp (Pakistan)</div>
+            <div class="contact-value">+92 331 2251252</div>
+          </div>
+        </a>
+
+        <a href="mailto:mtehseenahmed5@gmail.com" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">mtehseenahmed5@gmail.com</div>
+          </div>
+        </a>
+
+        <a href="https://linkedin.com/in/tehseenahmed1995" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zM8.5 8h3.8v2.05h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V23h-4V8z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">/in/tehseenahmed1995</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="cv-banner">
+        <div class="cv-banner-text">
+          <strong>Want the full CV?</strong> Download the PDF for architecture details, dates and the full skill list.
+        </div>
+        <a href="#" id="cv-download-link-2" class="btn btn-primary" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Tehseen Ahmed · Riyadh, Saudi Arabia · Built with Laravel-grade attention to detail</p>
+</footer>
+
+<script>
+  // Both CV download buttons point here. This is converted to Google Drive's direct-download
+  // format so clicking the button downloads the PDF instead of opening the preview page.
+  var CV_LINK = "https://drive.google.com/uc?export=download&id=1xAPvQ8G6d9Fmd5uEKRuaCgyBTVnS-QEC";
+  document.getElementById('cv-download-link').setAttribute('href', CV_LINK);
+  document.getElementById('cv-download-link-2').setAttribute('href', CV_LINK);
+</script>
+
+</body>
+</html>
